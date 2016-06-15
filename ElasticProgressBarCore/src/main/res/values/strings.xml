@@ -1,0 +1,4 @@
+<resources>
+    <string name="failed">failed</string>
+    <string name="done">done</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="back_line">#8095A5A6</color>
+    <color name="front_line">#FFFFFF</color>
+    <color name="bubble_color">#FFFFFF</color>
+    <color name="text_color">#D35400</color>
+</resources>

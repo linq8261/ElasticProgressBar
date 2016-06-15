@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ElasticProgressBar">
+        <attr name="back_line_color" format="color" />
+        <attr name="front_line_color" format="color" />
+        <attr name="bubble_color" format="color" />
+        <attr name="text_color" format="color" />
+    </declare-styleable>
+</resources>
