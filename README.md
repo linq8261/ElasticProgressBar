@@ -3,6 +3,9 @@
 
 ## 效果图：
 
+![成功效果](https://github.com/AudienL/ElasticProgressBar/blob/master/document/success.gif)
+![失败效果](https://github.com/AudienL/ElasticProgressBar/blob/master/document/failed.gif)
+
 ## 使用：
 
 ### 一、在 project 根目录的 build.gradle 中添加：
@@ -21,126 +24,41 @@ allprojects {
 其中最后版本在 release 中查看，如：1.0
 ```groovy
 dependencies {
-    compile 'com.github.AudienL:SimpleZXing:最后版本'
+    compile 'com.github.AudienL:ElasticProgressBar:最后版本'
 }
 ```
 
 ### 三、使用
 
-#### 1> SimpleScanActivity
-
-```java
-startActivity(new Intent(context, SimpleScanActivity.class));
-```
-
-#### 2> 自定义
+#### 1> 
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <SurfaceView
-        android:id="@+id/preview_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
-
-    <com.google.zxing.client.android.ViewfinderView
-        android:id="@+id/viewfinder_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
-
-    <!-- 扫描方法提示 -->
-    <TextView
-        android:id="@+id/status_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:background="#00000000"
-        android:text="@string/msg_default_status"
-        android:textColor="#ECF0F1"/>
-</merge>
+<com.audienl.elasticprogressbarcore.ElasticProgressBar
+    android:id="@+id/elastic_progress_bar"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    app:back_line_color="#95A5A6"
+    app:bubble_color="#F1C40F"
+    app:front_line_color="#F1C40F"
+    app:text_color="#FFFFFF" />
 ```
+
+#### 2> 
+
 ```java
-package com.audienl.simplezxing;
+@Bind(R.id.elastic_progress_bar) ElasticProgressBar mElasticProgressBar;
 
-import android.content.Intent;
-import android.os.Bundle;
+// 开始动画，这里实际是setProgress(0)
+mElasticProgressBar.start();
 
-import com.google.zxing.client.android.SuperScanActivity;
+// 设置进度
+mElasticProgressBar.setProgress(progress);
 
-public class CustomScanActivity extends SuperScanActivity {
-    public static final String RESULT_QRCODE_TEXT = "qrcode_text";
+// 调用成功动画
+mElasticProgressBar.success();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_scan);
-    }
-
-    @Override
-    public void handlerResult(CharSequence result) {
-        Intent intent = new Intent();
-        intent.putExtra(RESULT_QRCODE_TEXT, result);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-}
-```
-```java
-package com.audienl.simplezxing;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.zxing.client.android.SimpleScanActivity;
-
-public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_SCAN = 1;
-
-    private Context context;
-
-    private Button mBtnSimpleScan;
-    private Button mBtnCustomScan;
-    private TextView mTvResult;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        context = this;
-
-        mBtnSimpleScan = (Button) findViewById(R.id.btn_simple_scan);
-        mBtnCustomScan = (Button) findViewById(R.id.btn_custom_scan);
-        mTvResult = (TextView) findViewById(R.id.tv_result);
-
-        mBtnSimpleScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 默认Activity
-                startActivity(new Intent(context, SimpleScanActivity.class));
-            }
-        });
-        mBtnCustomScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 自定义Activity
-                startActivityForResult(new Intent(context, CustomScanActivity.class), REQUEST_CODE_SCAN);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK && data != null) {
-            String result = data.getStringExtra(CustomScanActivity.RESULT_QRCODE_TEXT);
-            mTvResult.setText(result);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-}
+// 调用失败动画
+mElasticProgressBar.fail();
 ```
