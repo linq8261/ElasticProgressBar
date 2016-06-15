@@ -30,8 +30,6 @@ dependencies {
 
 ### 三、使用
 
-#### 1> 
-
 ```xml
 <com.audienl.elasticprogressbarcore.ElasticProgressBar
     android:id="@+id/elastic_progress_bar"
@@ -44,8 +42,6 @@ dependencies {
     app:front_line_color="#F1C40F"
     app:text_color="#FFFFFF" />
 ```
-
-#### 2> 
 
 ```java
 @Bind(R.id.elastic_progress_bar) ElasticProgressBar mElasticProgressBar;
